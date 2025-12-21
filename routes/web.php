@@ -9,10 +9,15 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', [HomeController::class, 'index'], function () {
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::middleware(['auth', 'verified'])->group(function () {
 
-Route::get('/busca', [PokemonController::class, 'find'])->middleware(['auth', 'verified'])->name('busca');
+    Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
+    Route::get('/busca', [PokemonController::class, 'find'])->name('busca');
+    Route::get('/nextPage/{page}', [PokemonController::class, 'nextPage'])->name('nextPage');
+    Route::get('/beforePage/{page}', [PokemonController::class, 'beforePage'])->name('beforePage');
+    Route::get('/detalhes/{url}', [PokemonController::class, 'detalhes'])->name('beforePage');
+
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

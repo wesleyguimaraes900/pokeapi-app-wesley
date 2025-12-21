@@ -16,6 +16,8 @@
                         @csrf
 
                         <div>
+                            <x-text-input id="page" value="{{$pokemons['page']}}"
+                                type="hidden" name="page" />
                             <x-input-label for="nomePoke" :value="__('Busca por Nome')" />
                             <x-text-input id="nomePoke" class="mt-1 w-[40px]"
                                 type="text" name="nomePoke" autofocus autocomplete="Nome do Pokémon" />
@@ -32,11 +34,15 @@
 
                 <div class="p-6 text-gray-900 dark:text-gray-100">
 
+                    <a href="{{ route('beforePage', ['page' => $pokemons['page']]); }}" >Anterior</a> &nbsp &nbsp &nbsp
+                    <a href="{{ route('nextPage', ['page' => $pokemons['page']]); }}" >Próximo</a>
+
                     <table class="w-full table-auto border-collapse text-sm">
 
                         <thead>
                             <tr>
                                 <th class="border border-gray-200 p-4 pt-0 pb-3 pl-8 text-left font-medium text-gray-400 dark:border-gray-600 dark:text-gray-200">Nome</th>
+                                <th class="border border-gray-200 p-4 pt-0 pb-3 pl-8 text-left font-medium text-gray-400 dark:border-gray-600 dark:text-gray-200">Status</th>
                                 <th colspan="2" class="border border-gray-200 p-4 pt-0 pb-3 pl-8 text-left font-medium text-gray-400 dark:border-gray-600 dark:text-gray-200">Detalhes</th>
                             </tr>
                         </thead>
@@ -55,7 +61,16 @@
                                         <td class="border border-gray-200 p-4 pl-8
                                             text-gray-500 dark:border-gray-600 dark:text-gray-400"
                                             style="text-align:center;">
-                                            Detalhes
+                                            <b>Não importado</b>
+                                        </td>
+                                        <td class="border border-gray-200 p-4 pl-8
+                                            text-gray-500 dark:border-gray-600 dark:text-gray-400"
+                                            style="text-align:center;">
+
+
+                                            <a href="{{ route('nextPage', ['page' => $pokemons['page']]); }}" >Próximo</a>
+
+
                                         </td>
                                         <td class="border border-gray-200 p-4 pl-8
                                             text-gray-500 dark:border-gray-600 dark:text-gray-400"

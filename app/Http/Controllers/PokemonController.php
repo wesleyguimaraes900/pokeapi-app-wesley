@@ -41,6 +41,7 @@ class PokemonController extends Controller
 
             $pokemons["results"] = $pokemons["forms"];
             $pokemons["count"] = 1;
+            $pokemons["page"] = $request->page;
 
         } catch (Exception $e) {
 
@@ -49,6 +50,58 @@ class PokemonController extends Controller
         }
 
         return view('dashboard', compact('pokemons'));
+
+    }
+
+    public function nextPage($page){
+
+        $nextPage = (int) $page + 10;
+
+        $apiUrl = "https://pokeapi.co/api/v2/pokemon?limit=10&offset={$nextPage}";
+
+        try {
+
+            $response = Http::get($apiUrl);
+            $retorno = $response->object();
+            $pokemons = (array) $retorno;
+            $pokemons["page"] = $nextPage;
+
+        } catch (Exception $e) {
+
+            $pokemons["count"] = 0;
+
+        }
+
+        return view('dashboard', compact('pokemons'));
+
+    }
+
+    public function beforePage($page){
+
+        $nextPage = $page == "0" ? 0 : (int) $page - 10;
+
+        $apiUrl = "https://pokeapi.co/api/v2/pokemon?limit=10&offset={$nextPage}";
+
+        try {
+
+            $response = Http::get($apiUrl);
+            $retorno = $response->object();
+            $pokemons = (array) $retorno;
+            $pokemons["page"] = $nextPage;
+
+        } catch (Exception $e) {
+
+            $pokemons["count"] = 0;
+
+        }
+
+        return view('dashboard', compact('pokemons'));
+
+    }
+
+    public function detalhes($url){
+
+
 
     }
 

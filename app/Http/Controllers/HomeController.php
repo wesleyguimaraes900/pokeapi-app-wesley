@@ -20,6 +20,7 @@ class HomeController extends Controller
             $response = Http::get($apiUrl);
             $retorno = $response->object();
             $pokemons = (array) $retorno;
+            $pokemons["page"] = 0;
 
         } catch (Exception $e) {
 
