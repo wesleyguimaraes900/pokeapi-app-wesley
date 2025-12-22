@@ -101,7 +101,21 @@ class PokemonController extends Controller
 
     public function detalhes($url){
 
+        $urlDetalhe = base64_decode($url);
 
+        try {
+
+            $response = Http::get($urlDetalhe);
+            $retorno = $response->object();
+            $pokemon = (array) $retorno;
+
+        } catch (Exception $e) {
+
+            $pokemon["base_experience"] = "";
+
+        }
+
+        return view('detalhes', compact('pokemon'));
 
     }
 

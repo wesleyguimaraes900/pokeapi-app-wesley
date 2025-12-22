@@ -64,12 +64,18 @@
                                             <b>Não importado</b>
                                         </td>
                                         <td class="border border-gray-200 p-4 pl-8
-                                            text-gray-500 dark:border-gray-600 dark:text-gray-400"
+                                            text-blue-500 dark:border-gray-600 dark:text-blue-400"
                                             style="text-align:center;">
 
+                                            @php
 
-                                            <a href="{{ route('nextPage', ['page' => $pokemons['page']]); }}" >Próximo</a>
+                                                $urlCript = base64_encode($poke->url);
 
+                                            @endphp
+
+                                            <a href="{{ route('detalhes', ['url' => $urlCript]); }}" >
+                                                Detalhes
+                                            </a>
 
                                         </td>
                                         <td class="border border-gray-200 p-4 pl-8

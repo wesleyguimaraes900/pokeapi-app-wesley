@@ -15,7 +15,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/busca', [PokemonController::class, 'find'])->name('busca');
     Route::get('/nextPage/{page}', [PokemonController::class, 'nextPage'])->name('nextPage');
     Route::get('/beforePage/{page}', [PokemonController::class, 'beforePage'])->name('beforePage');
-    Route::get('/detalhes/{url}', [PokemonController::class, 'detalhes'])->name('beforePage');
+    Route::get('/detalhes/{url}', [PokemonController::class, 'detalhes'])->name('detalhes');
 
 });
 
