@@ -16,6 +16,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/nextPage/{page}', [PokemonController::class, 'nextPage'])->name('nextPage');
     Route::get('/beforePage/{page}', [PokemonController::class, 'beforePage'])->name('beforePage');
     Route::get('/detalhes/{url}', [PokemonController::class, 'detalhes'])->name('detalhes');
+    Route::get('/importar/{url}', [PokemonController::class, 'importar'])->name('importar');
 
 });
 

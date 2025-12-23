@@ -23,21 +23,17 @@ class PokemonController extends Controller
             $pokemons["results"] = $pokemons["forms"];
             $pokemons["count"] = 1;
             $pokemons["page"] = $request->page;
+            $id = (int) $pokemons["id"];
 
-            foreach ($pokemons["results"] as $poke) {
+            $retorno2 = Import_pokemon::where('idApi',$id)->get();
 
-                $id1 = str_replace("https://pokeapi.co/api/v2/pokemon/", "", $poke->url);
-                $id = (int) str_replace("/", "", $id1);
-
-                $retorno2 = Import_pokemon::where('idApi',$id)->get();
-
-                if(isset($retorno2->first()->idApi)){
-                    $poke->status = true;
-                }else{
-                    $poke->status = false;
-                }
-
+            if(isset($retorno2->first()->idApi)){
+                $pokemons["results"][0]->status = true;
+            }else{
+                $pokemons["results"][0]->status = false;
             }
+
+            $pokemons["results"][0]->url = str_replace("pokemon-form","pokemon", $pokemons["results"][0]->url);
 
         } catch (Exception $e) {
 
@@ -135,21 +131,6 @@ class PokemonController extends Controller
             $retorno = $response->object();
             $pokemon = (array) $retorno;
 
-            foreach ($pokemons["results"] as $poke) {
-
-                $id1 = str_replace("https://pokeapi.co/api/v2/pokemon/", "", $poke->url);
-                $id = (int) str_replace("/", "", $id1);
-
-                $retorno2 = Import_pokemon::where('idApi',$id)->get();
-
-                if(isset($retorno2->first()->idApi)){
-                    $poke->status = true;
-                }else{
-                    $poke->status = false;
-                }
-
-            }
-
         } catch (Exception $e) {
 
             $pokemon["base_experience"] = "";
@@ -157,6 +138,74 @@ class PokemonController extends Controller
         }
 
         return view('detalhes', compact('pokemon'));
+
+    }
+
+    public function importar($url){
+
+        $urlDetalhe = base64_decode($url);
+
+        try {
+
+            $id1 = str_replace("https://pokeapi.co/api/v2/pokemon/", "", $urlDetalhe);
+            $id = (int) str_replace("/", "", $id1);
+
+            $retorno2 = Import_pokemon::where('idApi',$id)->get();
+
+            if(isset($retorno2->first()->idApi)){
+
+                $msg = (object) [
+                    "msg" => "Pokémon já importado",
+                    "status" => false
+                ];
+
+                return redirect()
+                   ->back()
+                   ->with('resposta', $msg);
+
+            }else{
+
+                $response = Http::get($urlDetalhe);
+                $retorno = $response->object();
+                $pokemon = (array) $retorno;
+
+                $data = [
+                    "idApi" => $pokemon["id"],
+                    "name" =>($pokemon["name"] != "" ? mb_strtoupper($pokemon["name"]) : mb_strtoupper($pokemon["forms"][0]->name)),
+                    "height" =>(isset($pokemon["height"]) ? $pokemon["height"] : "" ),
+                    "weight" =>(isset($pokemon["weight"]) ? $pokemon["weight"] : "" ),
+                    "thumbnail" => (isset($pokemon['sprites']->front_default) ?
+                                $pokemon['sprites']->front_default :
+                                $pokemon['sprites']->other->dream_world->front_default)
+                ];
+
+                Import_pokemon::create($data);
+
+                $msg = (object) [
+                    "msg" => "Importado com sucesso!",
+                    "status" => true
+                ];
+
+                return redirect()
+                    ->back()
+                    ->with('resposta', $msg);
+
+            }
+
+
+
+        } catch (Exception $e) {
+
+            $msg = (object) [
+                "msg" => "Erro ao tentar importar",
+                "status" => false
+            ];
+
+            return redirect()
+                   ->back()
+                   ->with('resposta', $msg);
+
+        }
 
     }
 

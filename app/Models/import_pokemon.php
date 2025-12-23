@@ -9,11 +9,13 @@ class Import_pokemon extends Model
 
     protected $table = 'import_pokemon';
 
-    // protected $fillable = [
-    //     'idApi',
-    //     'name',
-    //     'height',
-    //     'weight',
-    //     'thumbnail'
-    // ];
+    protected $fillable = [
+        'idApi',
+        'name',
+        'height',
+        'prop3',
+        'weight',
+        'thumbnail',
+    ];
+
 }

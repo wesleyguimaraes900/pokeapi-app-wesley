@@ -9,6 +9,20 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
 
+                @if(session()->has('resposta'))
+                    @if(!session()->get('resposta')->status)
+                        <div class="text-xl dark:text-red-400 p-6 w-7 shadow-sm sm:rounded-lg"
+                    style="text-align:center;">
+                            <p>{{session()->get('resposta')->msg}}</p>
+                        </div>
+                    @else
+                        <div class="text-xl dark:text-green-400 p-6 w-7 shadow-sm sm:rounded-lg"
+                    style="text-align:center;"">
+                            <p>{{session()->get('resposta')->msg}}</p>
+                        </div>
+                    @endif
+                @endif
+
                 <div class="p-6 text-gray-900 dark:text-gray-100">
 
                     <form method="GET" action="/busca">
@@ -59,7 +73,7 @@
                                             <b>{{mb_strtoupper($poke->name)}}</b>
                                         </td>
                                         <td class="border border-gray-200 p-4 pl-8
-                                            text-gray-500 dark:border-gray-600 dark:text-{{($poke->status ? 'gray' : 'red')}}-400"
+                                            text-gray-500 dark:border-gray-600 dark:text-{{($poke->status ? 'green' : 'red')}}-400"
                                             style="text-align:center;">
                                             <b>{{($poke->status ? "Importado" : "Não Importado")}}</b>
                                         </td>
@@ -79,9 +93,13 @@
 
                                         </td>
                                         <td class="border border-gray-200 p-4 pl-8
-                                            text-gray-500 dark:border-gray-600 dark:text-gray-400"
+                                            text-blue-500 dark:border-gray-600 dark:text-blue-400"
                                             style="text-align:center;">
-                                            Importar
+                                            <a  onclick="return confirm('Você tem certeza que gostaria de importar os dados desse Pokémon?');"
+                                                 href="{{ route('importar', ['url' => $urlCript]); }}" >
+                                                Importar
+                                            </a>
+
                                         </td>
                                     </tr>
 

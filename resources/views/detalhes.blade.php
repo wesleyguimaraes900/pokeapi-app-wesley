@@ -17,12 +17,12 @@
                     <b>Thumbnail:</b>
                     @php
 
-                        $src = (isset($pokemon['sprites']->front_default) ?
-                            $pokemon['sprites']->front_default :
-                            $pokemon['sprites']->other->dream_world->front_default)
+                        $src = (isset($pokemon['sprites']->other->dream_world->front_default) ?
+                            $pokemon['sprites']->other->dream_world->front_default :
+                            $pokemon['sprites']->front_default)
 
                     @endphp
-                    <img src="{{$pokemon['sprites']->other->dream_world->front_default}}" width="200" height="200">
+                    <img src="{{$src}}" width="200" height="200">
                     <br>
 
                 </div>
