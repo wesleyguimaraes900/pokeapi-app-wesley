@@ -1,59 +1,105 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Passo a passo para executar o projeto PokeApi
 
-## About Laravel
+O projeto foi feito em Laravel/Blade, sendo necessário executar alguns comandos via terminal para acesso as telas:
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- Primeiro passo, clone o projeto no Github:
+    - No repositório do Github(https://github.com/wesleyguimaraes900/pokeapi-app-wesley), clique em "Code". Dentro dele você vai conseguir os links para clonagem.
+- Após clonar o projeto no seu computador, via Terminal, acesse a pasta do projeto e no terminal, digite os seguintes comandos em sequencia:
+    - Verifique se vocÊ possui o Laravel instalado na máquina, digite "laravel --version". Deve retornar algo como "Laravel Installer 5.23.2".
+    - Se não tiver o Laravel instalado, faça essas seguintes ações e depois clone o projeto no Github. Execute esses comandos: "composer global require laravel/installer", e depois "laravel new pokeapi-app-wesley".
+- Após Laravel instalado e o projeto clonado, execute o próximo comando para instalar todas as dependências:
+    - npm install
+    - npm run build
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Banco de dados
 
-## Learning Laravel
+- Antes rodar o projeto executo o seguinte comnando para rodar as Migrations e criar as tabelas:
+    - php artisan migrate
+- Rode o projeto com o seguinte comando:
+    - php artisan serve
+- Após rodar o projeto você conseguirá acessar as telas através do link que aparece logo embaixo. Algo semelhante a isso "http://127.0.0.1:8000".
+- De inicio você verá uma tela com a logo "Pokemón", e no canto superior direito o botão "Log in", clique nele e você verá a tela para logar no sistema.
+- Para possuir usuário para logar, volte para o terminal e execute o seguinte comando para rodar o Seeder:
+    - php artisan db:seed --class=UsersTableSeeder
+- Após rodar o comando Seeder será gerado esse usuário e senha:
+    - Usuário: admin@pokemon.com
+    - Senha: rootA123456
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Acessando o sistema
 
-## Laravel Sponsors
+- Volte a para a tela de Login e log com o usuário criado.
+- Você verá uma listagem de Pokemons, listagem essa feita somente com o retorno da api. A paginação e limite de exibição em tela também foi feita consumindo a api.
+- Com o filtro é possivel buscar 1 pokemon por vez através do Nome do Pokemon.
+- Na listagem você encontra as opções de "Detalhes" e "Importar":
+    - Clicando em "Detalhes" é exibido uma tela com alguns detalhes do Pokemon.
+    - Clicando em "Importar" é possivel importar os dados do Pokemon para o banco de dado interno.
+- Na listagem existe o campo "status", onde é indicado se aquele Pokemon ja foi Importado ou não para o banco interno. 
+    - Caso tente importar um pokemon que já esta no banco interno, é retornado uma mensagem dizendo que a importação ja foi feita, impedindo duplicação.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
 
-### Premium Partners
+## Exemplo .env:
+APP_NAME=Laravel
+APP_ENV=local
+APP_KEY=base64:+rP+pPYKIu9YeMPUYCAPdwdrWhg2u7bD12A9582kNU0=
+APP_DEBUG=true
+APP_URL=http://localhost:8000
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+APP_LOCALE=en
+APP_FALLBACK_LOCALE=en
+APP_FAKER_LOCALE=en_US
 
-## Contributing
+APP_MAINTENANCE_DRIVER=file
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+BCRYPT_ROUNDS=12
 
-## Code of Conduct
+LOG_CHANNEL=stack
+LOG_STACK=single
+LOG_DEPRECATIONS_CHANNEL=null
+LOG_LEVEL=debug
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=pokeapi_app_wesley
+DB_USERNAME=root
+DB_PASSWORD=
 
-## Security Vulnerabilities
+SESSION_DRIVER=database
+SESSION_LIFETIME=120
+SESSION_ENCRYPT=false
+SESSION_PATH=/
+SESSION_DOMAIN=null
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+BROADCAST_CONNECTION=log
+FILESYSTEM_DISK=local
+QUEUE_CONNECTION=database
 
-## License
+CACHE_STORE=database
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+MEMCACHED_HOST=127.0.0.1
+
+REDIS_CLIENT=phpredis
+REDIS_HOST=127.0.0.1
+REDIS_PASSWORD=null
+REDIS_PORT=6379
+
+MAIL_MAILER=log
+MAIL_SCHEME=null
+MAIL_HOST=127.0.0.1
+MAIL_PORT=2525
+MAIL_USERNAME=null
+MAIL_PASSWORD=null
+MAIL_FROM_ADDRESS="hello@example.com"
+MAIL_FROM_NAME="${APP_NAME}"
+
+AWS_ACCESS_KEY_ID=
+AWS_SECRET_ACCESS_KEY=
+AWS_DEFAULT_REGION=us-east-1
+AWS_BUCKET=
+AWS_USE_PATH_STYLE_ENDPOINT=false
+
+VITE_APP_NAME="${APP_NAME}"
+
