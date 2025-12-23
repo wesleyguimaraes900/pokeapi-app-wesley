@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Import_pokemon;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
@@ -21,6 +22,21 @@ class HomeController extends Controller
             $retorno = $response->object();
             $pokemons = (array) $retorno;
             $pokemons["page"] = 0;
+
+            foreach ($pokemons["results"] as $poke) {
+
+                $id1 = str_replace("https://pokeapi.co/api/v2/pokemon/", "", $poke->url);
+                $id = (int) str_replace("/", "", $id1);
+
+                $retorno2 = Import_pokemon::where('idApi',$id)->get();
+
+                if(isset($retorno2->first()->idApi)){
+                    $poke->status = true;
+                }else{
+                    $poke->status = false;
+                }
+
+            }
 
         } catch (Exception $e) {
 

@@ -59,9 +59,9 @@
                                             <b>{{mb_strtoupper($poke->name)}}</b>
                                         </td>
                                         <td class="border border-gray-200 p-4 pl-8
-                                            text-gray-500 dark:border-gray-600 dark:text-gray-400"
+                                            text-gray-500 dark:border-gray-600 dark:text-{{($poke->status ? 'gray' : 'red')}}-400"
                                             style="text-align:center;">
-                                            <b>Não importado</b>
+                                            <b>{{($poke->status ? "Importado" : "Não Importado")}}</b>
                                         </td>
                                         <td class="border border-gray-200 p-4 pl-8
                                             text-blue-500 dark:border-gray-600 dark:text-blue-400"

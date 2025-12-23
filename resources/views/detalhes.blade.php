@@ -11,10 +11,17 @@
 
                 <div class="p-6 text-gray-900 dark:text-gray-100">
 
-                    <b>Name:</b> {{mb_strtoupper($pokemon["name"])}}<br>
-                    <b>Height:</b> {{$pokemon["height"]}}<br>
-                    <b>Weight:</b> {{$pokemon["weight"]}}<br>
+                    <b>Name:</b> {{($pokemon["name"] != "" ? mb_strtoupper($pokemon["name"]) : mb_strtoupper($pokemon["forms"][0]->name))}}<br>
+                    <b>Height:</b> {{(isset($pokemon["height"]) ? $pokemon["height"] : "" )}}<br>
+                    <b>Weight:</b> {{(isset($pokemon["weight"]) ? $pokemon["weight"] : "" )}}<br>
                     <b>Thumbnail:</b>
+                    @php
+
+                        $src = (isset($pokemon['sprites']->front_default) ?
+                            $pokemon['sprites']->front_default :
+                            $pokemon['sprites']->other->dream_world->front_default)
+
+                    @endphp
                     <img src="{{$pokemon['sprites']->other->dream_world->front_default}}" width="200" height="200">
                     <br>
 
